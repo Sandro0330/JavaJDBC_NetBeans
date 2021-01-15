@@ -4,7 +4,10 @@ import br.com.jdbc.connection.ConnectionFactory;
 import br.com.jdbc.model.bean.Categoria;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +36,29 @@ public class CategoriaDAO {
         }
     }
     
-    
-    
-    
+    public List<Categoria> findAll() {
+        String sql = "SELECT * FROM categoria";
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        
+        List<Categoria> categorias = new ArrayList<>();
+      
+        try {
+            pstm = con.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            
+            while (rs.next()) {
+                Categoria categoria = new Categoria();           
+                categoria.setDescricao(rs.getString("descricao"));
+                categorias.add(categoria);
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, pstm, rs);
+        }  
+        return categorias;
+    } 
 }
