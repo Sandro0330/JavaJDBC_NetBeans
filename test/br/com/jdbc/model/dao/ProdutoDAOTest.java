@@ -4,6 +4,7 @@ import br.com.jdbc.model.bean.Categoria;
 import br.com.jdbc.model.bean.Produto;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
 public class ProdutoDAOTest {
     
@@ -11,6 +12,7 @@ public class ProdutoDAOTest {
     }
 
     @Test
+    @Ignore
     public void inserir() {
         
        Categoria categoria = new Categoria();
@@ -30,4 +32,14 @@ public class ProdutoDAOTest {
            fail("Erro ao salvar");
        }     
     }
+    
+    @Test
+    public void listar() {
+        ProdutoDAO dao = new ProdutoDAO();
+        
+        for(Produto p: dao.findAll()) {
+            System.out.println("Descrição Produto: " + p.getDescricao() + " - Descrição Categoria: " + p.getCategoria().getDescricao());
+        }
+    }
+    
 }

@@ -1,10 +1,14 @@
 package br.com.jdbc.model.dao;
 
 import br.com.jdbc.connection.ConnectionFactory;
+import br.com.jdbc.model.bean.Categoria;
 import br.com.jdbc.model.bean.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProdutoDAO {
 
@@ -33,4 +37,39 @@ public class ProdutoDAO {
             ConnectionFactory.closeConnection(con, pstm);
         }
     }
+    
+    public List<Produto> findAll() {
+        String sql = "select p.id as p_id, p.descricao as p_desc, qtd, valor, categoria_id, c.id as c_id, c.descricao  as c_desc from produto p inner join categoria c on c.id = p.categoria_id";
+        
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        
+        List<Produto> produtos = new ArrayList<>();
+      
+        try {
+            pstm = con.prepareStatement(sql);
+            rs = pstm.executeQuery();
+            
+            while (rs.next()) {
+                Produto produto = new Produto();           
+                produto.setDescricao(rs.getString("p_id"));
+                produto.setQtd(rs.getInt("qtd")); 
+                produto.setValor(rs.getDouble("valor"));
+                
+                Categoria categoria = new Categoria();
+                categoria.setId(rs.getInt("c_id"));
+                categoria.setDescricao(rs.getString("c_desc"));
+                produto.setCategoria(categoria);
+                
+                
+                produtos.add(produto);
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, pstm, rs);
+        }  
+        return produtos;
+    } 
 }
