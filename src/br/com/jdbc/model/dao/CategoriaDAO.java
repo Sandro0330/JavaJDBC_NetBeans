@@ -79,4 +79,20 @@ public class CategoriaDAO {
             ConnectionFactory.closeConnection(con, pstm );
         }
     }
+    public boolean delete(Categoria categoria) {
+        String sql = "DELETE FROM categoria WHERE id = ?";
+        
+        PreparedStatement pstm = null;
+        try {
+            pstm = con.prepareStatement(sql);
+            pstm.setInt(1, categoria.getId());
+            pstm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+           System.err.println("Erro: " + ex);
+           return false;
+        } finally {
+            ConnectionFactory.closeConnection(con, pstm );
+        }
+    }
 }

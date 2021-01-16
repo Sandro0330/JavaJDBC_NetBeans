@@ -24,7 +24,7 @@ public class CategoriaDAOTest {
         }
     }
     @Test
-
+    @Ignore
     public void atualizar() {
         Categoria cat = new Categoria("Roupa");
         cat.setId(1);
@@ -35,6 +35,19 @@ public class CategoriaDAOTest {
             System.out.println("Atualização realizada com sucesso!");
         } else {
             fail("Erro ao salvar");
+        }
+    }
+    
+    @Test
+    public void deletar() {
+        Categoria cat = new Categoria();
+        cat.setId(3);
+        
+        CategoriaDAO dao = new CategoriaDAO();
+        if(dao.delete(cat)) {
+            System.err.println("Removido com sucesso!");
+        } else {
+            fail("Erro ao deletar");
         }
     }
     
