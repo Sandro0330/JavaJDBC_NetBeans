@@ -39,7 +39,7 @@ public class ProdutoDAO {
     }
     
     public List<Produto> findAll() {
-        String sql = "select p.id as p_id, p.descricao as p_desc, qtd, valor, categoria_id, c.id as c_id, c.descricao  as c_desc from produto p inner join categoria c on c.id = p.categoria_id";
+        String sql = "select * from view_produtocategoria";
         
         PreparedStatement pstm = null;
         ResultSet rs = null;
