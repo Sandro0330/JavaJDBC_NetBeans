@@ -23,6 +23,20 @@ public class CategoriaDAOTest {
             fail("Erro ao salvar");
         }
     }
+    @Test
+
+    public void atualizar() {
+        Categoria cat = new Categoria("Roupa");
+        cat.setId(1);
+        
+        CategoriaDAO dao = new CategoriaDAO();
+        
+        if (dao.update(cat)) {
+            System.out.println("Atualização realizada com sucesso!");
+        } else {
+            fail("Erro ao salvar");
+        }
+    }
     
     @Test
     public void listar() {

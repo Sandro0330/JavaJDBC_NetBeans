@@ -61,4 +61,22 @@ public class CategoriaDAO {
         }  
         return categorias;
     } 
+    
+    public boolean update(Categoria categoria) {
+        String sql = "UPDATE categoria SET descricao = ? WHERE id = ?";
+        
+        PreparedStatement pstm = null;
+        try {
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, categoria.getDescricao());
+            pstm.setInt(2, categoria.getId());
+            pstm.executeLargeUpdate();
+            return true;
+        } catch (SQLException ex) {
+           System.err.println("Erro: " + ex);
+           return false;
+        } finally {
+            ConnectionFactory.closeConnection(con, pstm );
+        }
+    }
 }
